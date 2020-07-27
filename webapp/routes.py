@@ -5,7 +5,7 @@ from webapp.models import Op
 @app.route('/')
 def home():
     all_ops = Op.query.all()
-    return render_template('home.html', result = all_ops)
+    return render_template('home.html', all_ops = all_ops)
 
 @app.route('/send', methods=['POST'])
 def send():
@@ -16,7 +16,7 @@ def send():
         operation = request.form['operation']
 
         if operation == 'add':
-            result = f'{i} + {ii} = {float(i) + float(ii)}'
+            result = f'{i} + {ii} = {round(float(i) + float(ii), 2)}'
 
             op = Op(result)
             db.session.add(op)
@@ -25,7 +25,7 @@ def send():
             return render_template('home.html', result = result)
         
         elif operation == 'substract':
-            result = f'{i} - {ii} = {float(i) - float(ii)}'
+            result = f'{i} - {ii} = {round(float(i) - float(ii), 2)}'
 
             op = Op(result)
             db.session.add(op)
@@ -34,7 +34,7 @@ def send():
             return render_template('home.html', result = result)
         
         elif operation == 'multiply':
-            result = f'{i} x {ii} = {float(i) * float(ii)}'
+            result = f'{i} x {ii} = {round(float(i) * float(ii), 2)}'
 
             op = Op(result)
             db.session.add(op)
@@ -43,12 +43,12 @@ def send():
             return render_template('home.html', result = result)
         
         elif operation == 'divide':
-            result = f'{i} ÷ {ii} = {float(i) / float(ii)}'
+            result = f'{i} ÷ {ii} = {round(float(i) / float(ii), 2)}'
 
             op = Op(result)
             db.session.add(op)
             db.session.commit()
-            
+
             return render_template('home.html', result = result)
 
         # else:

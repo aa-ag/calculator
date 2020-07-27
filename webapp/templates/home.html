@@ -25,7 +25,9 @@
         <input type="submit" value="Calculate">
 
         <div class="result">
-            {{ result }}
+            {% for op in all_ops %}
+                {{ op.result }}
+            {% endfor %}
         </div>
     </form>
 </div>
