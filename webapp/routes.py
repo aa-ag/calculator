@@ -4,7 +4,7 @@ from webapp.models import Op
 
 @app.route('/')
 def home():
-    all_ops = Op.query.all()
+    all_ops = Op.query.limit(10).all()
     return render_template('home.html', all_ops = all_ops)
 
 @app.route('/send', methods=['POST'])
