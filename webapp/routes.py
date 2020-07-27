@@ -1,10 +1,10 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from webapp import app, db
 from webapp.models import Op
 
 @app.route('/')
 def home():
-    all_ops = Op.query.limit(10).all()
+    all_ops = Op.query.all()[-10:]
     return render_template('home.html', all_ops = all_ops)
 
 @app.route('/send', methods=['POST'])
@@ -22,7 +22,7 @@ def send():
             db.session.add(op)
             db.session.commit()
 
-            return render_template('home.html', result = result)
+            return redirect(url_for('home'))
         
         elif operation == 'substract':
             result = f'{i} - {ii} = {round(float(i) - float(ii), 2)}'
@@ -31,7 +31,7 @@ def send():
             db.session.add(op)
             db.session.commit()
 
-            return render_template('home.html', result = result)
+            return redirect(url_for('home'))
         
         elif operation == 'multiply':
             result = f'{i} x {ii} = {round(float(i) * float(ii), 2)}'
@@ -40,7 +40,7 @@ def send():
             db.session.add(op)
             db.session.commit()
 
-            return render_template('home.html', result = result)
+            return redirect(url_for('home'))
         
         elif operation == 'divide':
             result = f'{i} ÷ {ii} = {round(float(i) / float(ii), 2)}'
@@ -49,7 +49,7 @@ def send():
             db.session.add(op)
             db.session.commit()
 
-            return render_template('home.html', result = result)
+            return redirect(url_for('home'))
 
         # else:
         #     return render_template('home.html')
