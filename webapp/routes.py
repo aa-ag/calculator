@@ -1,32 +1,62 @@
 from flask import render_template, request
-from webapp import app
+from webapp import app, db
+from webapp.models import Op
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    all_ops = Op.query.all()
+    return render_template('home.html', result = all_ops)
 
 @app.route('/send', methods=['POST'])
 def send():
     if request.method == 'POST':
+
         i = request.form['i']
         ii = request.form['ii']
         operation = request.form['operation']
 
         if operation == 'add':
-            result = float(i) + float(ii)
+            result = f'{i} + {ii} = {float(i) + float(ii)}'
+
+            op = Op(result)
+            db.session.add(op)
+            db.session.commit()
+
             return render_template('home.html', result = result)
         
         elif operation == 'substract':
-            result = float(i) - float(ii)
+            result = f'{i} - {ii} = {float(i) - float(ii)}'
+
+            op = Op(result)
+            db.session.add(op)
+            db.session.commit()
+
             return render_template('home.html', result = result)
         
         elif operation == 'multiply':
-            result = float(i) * float(ii)
+            result = f'{i} x {ii} = {float(i) * float(ii)}'
+
+            op = Op(result)
+            db.session.add(op)
+            db.session.commit()
+
             return render_template('home.html', result = result)
         
         elif operation == 'divide':
-            result = float(i) / float(ii)
+            result = f'{i} ÷ {ii} = {float(i) / float(ii)}'
+
+            op = Op(result)
+            db.session.add(op)
+            db.session.commit()
+            
             return render_template('home.html', result = result)
-        
-        else:
-            return render_template('home.html')
+
+        # else:
+        #     return render_template('home.html')
+            
+
+# TO DO: catch erroneous inputs, 
+# if time allows: Captcha, calculator GUI
+
+# result = 'This is awkward... dunnot how to do that :s'
+# return render_template('home.html', result = result)
