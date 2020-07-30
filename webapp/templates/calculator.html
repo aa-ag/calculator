@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Calc {% endblock %}
+
+{% block content %}
+
+<div class="btn-group" role="group">
+
+    <form name=calculator action="" method="">
+    
+        <input type="text" name="display" class="display" id="display" value="" disabled>
+
+        <div class="buttons">
+        
+            <button class="btn btn-primary" value="+">+</button>
+            <button class="btn btn-primary" value="-">-</button>
+            <button class="btn btn-primary" value="*">x</button>
+            <button class="btn btn-primary" value="/">÷</button>
+            
+            <button class="btn btn-light" value="7">7</button>
+            <button class="btn btn-light" value="8">8</button>
+            <button class="btn btn-light" value="9">9</button>
+
+            <button class="btn btn-light" value="4">4</button>
+            <button class="btn btn-light" value="5">5</button>
+            <button class="btn btn-light" value="6">6</button>
+
+            <button class="btn btn-light" value="1">1</button>
+            <button class="btn btn-light" value="2">2</button>
+            <button class="btn btn-light" value="3">3</button>
+
+            <button class="btn btn-light" value="0" id="zero">0</button>
+            <button class="btn btn-light" value=".">.</button>
+            <button class="btn btn-light" value="clear">C</button>
+
+            <button class="btn btn-light" value="equal" id="equal" data-action="calculate">=</button>
+        
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block script %}
+
+<script>
+    function myFunction() {
+      let x = document.getElementById("7").value;
+      document.getElementById("display").innerHTML = x;
+    }
+</script>
+
+{% endblock %}

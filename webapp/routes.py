@@ -51,12 +51,10 @@ def send():
 
             return redirect(url_for('home'))
 
-        # else:
-        #     return render_template('home.html')
-            
+@app.route('/calculator')
+def calc():
+    return render_template('calculator.html')
 
-# TO DO: catch erroneous inputs, 
-# if time allows: Captcha, calculator GUI
-
-# result = 'This is awkward... dunnot how to do that :s'
-# return render_template('home.html', result = result)
+@app.route('/math')
+def math():
+    return redirect(url_for('calculator'))
