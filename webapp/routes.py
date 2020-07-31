@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from webapp import app, db
 from webapp.models import Op
 
@@ -15,41 +15,47 @@ def send():
         ii = request.form['ii']
         operation = request.form['operation']
 
-        if operation == 'add':
-            result = f'{i} + {ii} = {round(float(i) + float(ii), 2)}'
+        try:
+            if operation == '+' and type(float(i)) == float and type(float(ii)) == float:
+                result = f'{i} + {ii} = {round(float(i) + float(ii), 2)}'
 
-            op = Op(result)
-            db.session.add(op)
-            db.session.commit()
+                op = Op(result)
+                db.session.add(op)
+                db.session.commit()
 
+                return redirect(url_for('home'))
+            
+            elif operation == '-' and type(float(i)) == float and type(float(ii)) == float:
+                result = f'{i} - {ii} = {round(float(i) - float(ii), 2)}'
+
+                op = Op(result)
+                db.session.add(op)
+                db.session.commit()
+
+                return redirect(url_for('home'))
+            
+            elif operation == 'x' and type(float(i)) == float and type(float(ii)) == float:
+                result = f'{i} x {ii} = {round(float(i) * float(ii), 2)}'
+
+                op = Op(result)
+                db.session.add(op)
+                db.session.commit()
+
+                return redirect(url_for('home'))
+            
+            elif operation == '÷' and type(float(i)) == float and type(float(ii)) == float:
+                result = f'{i} ÷ {ii} = {round(float(i) / float(ii), 2)}'
+
+                op = Op(result)
+                db.session.add(op)
+                db.session.commit()
+
+                return redirect(url_for('home'))
+        except:
+            flash("This is awkward... Right now I can only handle numbers. Try again :)")
             return redirect(url_for('home'))
-        
-        elif operation == 'substract':
-            result = f'{i} - {ii} = {round(float(i) - float(ii), 2)}'
 
-            op = Op(result)
-            db.session.add(op)
-            db.session.commit()
-
-            return redirect(url_for('home'))
-        
-        elif operation == 'multiply':
-            result = f'{i} x {ii} = {round(float(i) * float(ii), 2)}'
-
-            op = Op(result)
-            db.session.add(op)
-            db.session.commit()
-
-            return redirect(url_for('home'))
-        
-        elif operation == 'divide':
-            result = f'{i} ÷ {ii} = {round(float(i) / float(ii), 2)}'
-
-            op = Op(result)
-            db.session.add(op)
-            db.session.commit()
-
-            return redirect(url_for('home'))
+# Calculator-looking GUI -- future itereation
 
 @app.route('/calculator')
 def calc():

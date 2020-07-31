@@ -7,23 +7,32 @@
 <div class="container">
     <form action="/send" method="POST">
         
-        <input class="form-control" type="text" placeholder="Input your first number" name="i">
+        <input class="form-control" type="text" placeholder="Input your first number" name="i" required>
         <br>
 
         <select class="custom-select custom-select-lg mb-3" name="operation">
             <option value="operation">Select an operation</option>
-            <option value="add">+</option>
-            <option value="substract">-</option>
-            <option value="multiply">x</option>
-            <option value="divide">÷</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="x">x</option>
+            <option value="÷">÷</option>
         </select>
         <br><br> 
         
-        <input class="form-control" type="text" placeholder="Input your second number" name="ii">
+        <input class="form-control" type="text" placeholder="Input your second number" name="ii" required>
         <br>
 
         <input class="btn btn-primary" id="calculate" type="submit" value="Calculate">
         <br><br>
+        <div class="error">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p>{{ msg }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
         <div class="result">
             <small>Last 10 calculations:</small>
