@@ -1,5 +1,5 @@
 $(function(){
-    let socket = io.connect('http://127.0.0.1:5000');
+    let socket = io.connect('https://social-calculator.herokuapp.com/');
     
     function appendOperation(operation){
         let op = '<li>' + operation + '</li>';
