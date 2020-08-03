@@ -1,4 +1,4 @@
-from webapp import app, routes
+from webapp import app, routes, socketio
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    socketio.run(app)

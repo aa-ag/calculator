@@ -1,6 +1,8 @@
-from flask import render_template, request, redirect, url_for, flash
-from webapp import app, db
+from flask import render_template, request, redirect, url_for, flash, jsonify
+from webapp import app, db, socketio, send
 from webapp.models import Op
+
+# from flask_socketio import SocketIO, send, emit
 
 @app.route('/')
 def home():
@@ -15,50 +17,34 @@ def send():
         ii = request.form['ii']
         operation = request.form['operation']
 
+        result = None
+
         try:
             if operation == '+' and type(float(i)) == float and type(float(ii)) == float:
                 result = f'{i} + {ii} = {round(float(i) + float(ii), 2)}'
-
-                op = Op(result)
-                db.session.add(op)
-                db.session.commit()
-
-                return redirect(url_for('home'))
             
             elif operation == '-' and type(float(i)) == float and type(float(ii)) == float:
                 result = f'{i} - {ii} = {round(float(i) - float(ii), 2)}'
-
-                op = Op(result)
-                db.session.add(op)
-                db.session.commit()
-
-                return redirect(url_for('home'))
             
             elif operation == 'x' and type(float(i)) == float and type(float(ii)) == float:
                 result = f'{i} x {ii} = {round(float(i) * float(ii), 2)}'
-
-                op = Op(result)
-                db.session.add(op)
-                db.session.commit()
-
-                return redirect(url_for('home'))
             
             elif operation == '÷' and type(float(i)) == float and type(float(ii)) == float:
                 result = f'{i} ÷ {ii} = {round(float(i) / float(ii), 2)}'
 
+            if result != None:
                 op = Op(result)
                 db.session.add(op)
                 db.session.commit()
 
-                return redirect(url_for('home'))
+                return jsonify(result=result, isValid=True)
         except:
-            flash("This is awkward... Right now I can only handle numbers. Try again :)")
-            return redirect(url_for('home'))
+            return jsonify(result="This is awkward... Right now I can only handle numbers. Try again :)", isValid=False)
 
-# Calculator-looking GUI -- future itereation
+# Calculator-looking GUI -- future iteration
 
 @app.route('/calculator')
-def calc():
+def calculator():
     return render_template('calculator.html')
 
 @app.route('/math')

@@ -5,12 +5,11 @@
 {% block content %}
 
 <div class="container">
-    <form action="/send" method="POST">
         
-        <input class="form-control" type="text" placeholder="Input your first number" name="i" required>
+        <input class="form-control" type="text" placeholder="Input your first number" name="i" id="i" required>
         <br>
 
-        <select class="custom-select custom-select-lg mb-3" name="operation">
+        <select class="custom-select custom-select-lg mb-3" name="operation" id="operation">
             <option value="operation">Select an operation</option>
             <option value="+">+</option>
             <option value="-">-</option>
@@ -19,28 +18,28 @@
         </select>
         <br><br> 
         
-        <input class="form-control" type="text" placeholder="Input your second number" name="ii" required>
+        <input class="form-control" type="text" placeholder="Input your second number" name="ii" id="ii" required>
         <br>
 
-        <input class="btn btn-primary" id="calculate" type="submit" value="Calculate">
+        <input class="btn btn-primary" id="calculate" value="Calculate">
         <br><br>
-        <div class="error">
+        <div class="error-box">
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for msg in messages %}
-                        <p>{{ msg }}</p>
+                        <p style="color: rgb(200, 5, 5);">{{ msg }}</p>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
         </div>
-
-        <div class="result">
-            <small>Last 10 calculations:</small>
+        <small>Last 10 calculations:</small>
+        <br>
+        <span id="last"></span>
+        <ol id="result">
             {% for op in all_ops %}
-                <div>{{ op.result }}</div>
+                <li id="calculations">{{ op.result }}</li>
             {% endfor %}
-        </div>
-    </form>
+        </ol>
 </div>
 
 {% endblock %}

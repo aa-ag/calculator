@@ -74,6 +74,7 @@ button:hover {
 @media only screen and (max-width: 450px) {
     html {
         background-image: none;
+        background-color: #FFF0E4;
     }
     .btn-group {
         border: 1px solid rgba(204, 204, 204, 0.849);
